@@ -1,0 +1,11 @@
+{
+//settings
+"passfail": false,	//stop on first error
+"maxerr": 100, //Maximum error before stopping
+
+"undef": true, //prohibits the use of explicitly undeclared variables
+"unused": true, //warns when you define and never use your variable
+"devel": true, //Allow development statements e.g console.log()
+"eqeqeq": true, //require triple equals i.e ===
+"shadow": false //allows redefine variables later in code e.g 'var x=0; x=90;'
+}
