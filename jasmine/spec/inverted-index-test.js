@@ -13,9 +13,7 @@ describe("Read book data", function(){
 
 describe("Populate Index", function(){
 	it("should return array of correct indices after search", function(done){
-		console.log('The function is ' + indexCreate());
 		indexCreate().then(function(data){
-			console.log("in test ", data);
 			expect(data).toEqual(["Index: 0, title: Alice in Wonderland.", 
 				"Index: 1, title: The Lord of the Rings: The Fellowship of the Ring."]);
 			expect([1]).toEqual([1]);
