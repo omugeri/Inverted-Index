@@ -1,62 +1,63 @@
+// Class Index(){
 function readJson() {
-	return fetch('../jasmine/books.json').
-		then(function(response){
-		return response.json()}).
-		then(function(data){
-			return data;
-		}).catch (function(error){
-			throw error;
-	});
-}
-
-function indexCreate(){
-	var indarray = [];
-	var bookarray = [];
-	var sentenceArray = [];
-	var wordArray = [];
-	return readJson().then(function(response){
-		var data = response;
-		data.map(function(element, index){
-			var content = [];
-			var titles = Object.keys(element);//[title,text]
-			var i=0;
-			indarray.push('Index: ' + index + ', title: ' + element[titles[0]]);
-
-			for (var i = 0; i < titles.length; i++) {
-				content.push(element[titles[i]]);
-			}
-
-			content.map(function(phrase, indexOfPhrase) {
-					bookarray.push([phrase.split(' '), index]);
-			});
+		return fetch('../jasmine/books.json').
+			then(function(response){
+			return response.json()}).
+			then(function(data){
+				return data;
+			}).catch (function(error){
+				throw error;
 		});
+	}
 
-	 	return bookarray;
- });
-}
+	function createIndex(){
+		var bookarray = {};
+		var sentenceArray = [];
+		return readJson().then(function(response) {
+			var data = response;
+			data.map(function(element, index) {
+				var content = [];
+				var titles = Object.keys(element);//[title,text]
+				var i=0;
 
-function getIndex(word){
-	return indexCreate().then(function(response){
-		var index = [];
-		var i=0, j=0, count=0;
-		for(i=0; i<response.length; i++){//loop through the index
-			sentence = response[i][0];
-			 console.log(response);
-			for(j=0; j<sentence.length; j++) {
-				// console.log('word is: ', word);
-				// console.log('word being read is: ', String(sentence[j].split(',')));
-				while (count==0){
-					if( word == sentence[j].split(',')){
-						index.push(response[i][1]);
-						count ++;
-					}
+				for (i = 0; i < titles.length; i++) {
+					content.push(element[titles[i]]);
 				}
 
-			}
+				content.map(function(phrase, indexOfPhrase) {
+					//replace all special characters with space and change to lowercase
+					sentence = phrase.toLowerCase().replace(/\W/g, ' ').replace(/\s+/g, ' ').trim();
+					var words = sentence.split(' ');//split the sentence into words
+					for (var i=0; i<words.length; i++) {
+						if(bookarray[words[i]]) {
+							if(index !== bookarray[words[i]].value) {
+								bookarray[words[i]].push(index);
+							}
+						}
+						else {
+							bookarray[words[i]] = [index];
+						}
+					}
+					// make the elements in the array unique
+					for(j=0; j<words.length; j++) {
+						var set = new Set(bookarray[words[j]]);
+						bookarray[words[j]] = Array.from(set);
+					}
+				});
+			});
+			return bookarray;
+	 });
+	}
+	function getIndex(url){
+		createIndex().then(function(response){
+			var index = console.log(response);
+		})
+	}
 
-		}
-		return index;
+	function searchIndex(word){
+		return createIndex().then(function(response) {
+			var index = response[word];
+			return index;
 
-	});
-
-}
+		});
+	}
