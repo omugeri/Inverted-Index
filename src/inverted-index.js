@@ -1,19 +1,19 @@
-// Class Index(){
-function readJson() {
-		return fetch('../jasmine/books.json').
-			then(function(response){
-			return response.json()}).
-			then(function(data){
-				return data;
-			}).catch (function(error){
-				throw error;
-		});
-	}
+class Index {
+	readJson() {
+			return fetch('../jasmine/books.json').
+				then(function(response){
+				return response.json()}).
+				then(function(data){
+					return data;
+				}).catch (function(error){
+					throw error;
+			});
+		}
 
-	function createIndex(){
+	createIndex(){
 		var bookarray = {};
-		var sentenceArray = [];
-		return readJson().then(function(response) {
+		var sentence = [];
+		return this.readJson().then(function(response) {
 			var data = response;
 			data.map(function(element, index) {
 				var content = [];
@@ -39,7 +39,7 @@ function readJson() {
 						}
 					}
 					// make the elements in the array unique
-					for(j=0; j<words.length; j++) {
+					for(var j=0; j<words.length; j++) {
 						var set = new Set(bookarray[words[j]]);
 						bookarray[words[j]] = Array.from(set);
 					}
@@ -48,16 +48,22 @@ function readJson() {
 			return bookarray;
 	 });
 	}
-	function getIndex(url){
-		createIndex().then(function(response){
+	getIndex(url){
+		this.createIndex().then(function(response){
 			var index = console.log(response);
 		})
 	}
 
-	function searchIndex(word){
-		return createIndex().then(function(response) {
-			var index = response[word];
-			return index;
+	searchIndex(word){
+		return this.createIndex().then(function(response) {
+			if(response[word] === undefined){
+				return 'Word not found!';
+			}
+			else {
+				var index = response[word];
+				return index;
 
+			}
 		});
 	}
+}

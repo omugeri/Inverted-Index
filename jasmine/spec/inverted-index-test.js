@@ -1,9 +1,9 @@
 
-
+var index = new Index();
 describe("Read book data", function(){
 	it("should read the JSON file and assert its not empty", function(done){
 
-		readJson().then(function(data){
+		index.readJson().then(function(data){
 			console.log("in test ", data);
 			expect(data).toBeTruthy();
 			done();
@@ -13,7 +13,7 @@ describe("Read book data", function(){
 
 describe("Populate Index", function(){
 	it("should return array of correct indices after search", function(done){
-		createIndex().then(function(data){
+		index.createIndex().then(function(data){
 			expect(data).toEqual(jasmine.any(Object));
 			done();
 		});
@@ -22,10 +22,15 @@ describe("Populate Index", function(){
 });
 
 describe("Verify Index", function(){
-	it("verifies that the index maps correctly", function(done){
-
-		searchIndex('and').then(function(data){
-			expect(data).toEqual([0, 1]);
+	it("verifies that the right index of a word is given", function(done){
+				index.searchIndex('and').then(function(data){
+						expect(data).toEqual([0, 1]);
+						done();
+				});
+	});
+	it("verifies that it responds if word is not found", function(done){
+		index.searchIndex('Olive').then(function(data){
+			expect(data).toEqual('Word not found!');
 			done();
 		});
 	});
