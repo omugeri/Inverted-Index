@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# inverted-index
+# Inverted Index
 =======
 ## Introduction
 
