@@ -1,20 +1,20 @@
 
 var index = new Index();
 var type = '';
-describe("Read book data", function(){
-	it("should assert that false is returned if the file doesn't exist", function(done){
+describe('Read book data', function(){
+	it('should assert that false is returned if the file doesn\'t exist', function(done){
 		index.readJson('../jasmine/book.json').then(function(data){
 			expect(data).toBeFalsy();
 			done();
 		});
 	});
-	it("should read the JSON file and assert its not empty", function(done){
+	it('should read the JSON file and assert its not empty', function(done){
 		index.readJson('../jasmine/books.json').then(function(data){
 			expect(data).toBeTruthy();
 			done();
 		});
 	});
-	it("confirms that each object contains property whose value is a string", function(done){
+	it('confirms that each object contains property whose value is a string', function(done){
 		index.readJson('../jasmine/books.json').then(function(data) {
 			var type = false;
 			keys = Object.keys(data[1]);
@@ -24,8 +24,8 @@ describe("Read book data", function(){
 	});
 });
 
-describe("Populate Index", function(){
-	it("verifies that the index is created", function(done){
+describe('Populate Index', function(){
+	it('verifies that the index is created', function(done){
 		index.createIndex('../jasmine/books.json').then(function(data){
 			expect(data).toEqual(jasmine.any(Object));
 			done();
@@ -41,18 +41,18 @@ describe("Populate Index", function(){
 	})
 });
 
-describe("Search Index", function(){
-	it("verifies that the correct results of a word are given", function(done){
+describe('Search Index', function(){
+	it('verifies that the correct results of a word are given', function(done){
 						expect(index.searchIndex('and')).toEqual([[0, 1]]);
 						done();
 	});
-	it("verifies that it responds if word is not found", function(){
+	it('verifies that it responds if word is not found', function(){
 			expect(index.searchIndex('Olive')).toEqual(['Word not found!']);
 	});
-	it("verifies that it can handle multiple search terms", function(){
+	it('verifies that it can handle multiple search terms', function(){
 			expect(index.searchIndex('Alice and John')). toEqual([[0],[0,1], 'Word not found!']);
 	});
-	it("verifies that it can handle an array search terms", function(){
+	it('verifies that it can handle an array search terms', function(){
 			expect(index.searchIndex(['Wonderland', 'Rings'])). toEqual([[0],[1]]);
 	});
 });
