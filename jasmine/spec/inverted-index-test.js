@@ -1,7 +1,14 @@
 
 var index = new Index();
-var type = '';
+
 describe('Read book data', function(){
+		var data;
+	beforeEach(function(done){
+		index.readJson('../jasmine/books.json').then(function(result){
+			data = result;
+			done();
+		});
+	});
 	it('should assert that false is returned if the file doesn\'t exist', function(done){
 		index.readJson('../jasmine/book.json').then(function(data){
 			expect(data).toBeFalsy();
@@ -9,17 +16,14 @@ describe('Read book data', function(){
 		});
 	});
 	it('should read the JSON file and assert its not empty', function(done){
-		index.readJson('../jasmine/books.json').then(function(data){
-			expect(data).toBeTruthy();
-			done();
+		expect(data).toBeTruthy();
+		done();
 		});
 	});
 	it('confirms that each object contains property whose value is a string', function(done){
-		index.readJson('../jasmine/books.json').then(function(data) {
-			var type = false;
-			keys = Object.keys(data[1]);
-			expect(typeof data[1][keys[0]]).toBe('string');
-			done();
+		var keys = Object.keys(data[1]);
+		expect(typeof data[1][keys[0]]).toBe('string');
+		done();
 		});
 	});
 });
@@ -42,9 +46,8 @@ describe('Populate Index', function(){
 });
 
 describe('Search Index', function(){
-	it('verifies that the correct results of a word are given', function(done){
-						expect(index.searchIndex('and')).toEqual([[0, 1]]);
-						done();
+	it('verifies that the correct results of a word are given', function(){
+			expect(index.searchIndex('and')).toEqual([[0, 1]]);
 	});
 	it('verifies that it responds if word is not found', function(){
 			expect(index.searchIndex('Olive')).toEqual(['Word not found!']);
