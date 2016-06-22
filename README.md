@@ -51,17 +51,22 @@ on the terminal and run the already installed python server by running the follo
 `python -m SimpleHTTPServer 8000`. you can replace the 8000 with any port number not in use.
 
 ### installing `Git`
+
 To clone the repository, you need to install `git`.
 Follow the instructions at https://git-scm.com/book/en/v2/Getting-Started-Installing-Git to
 do this.
 
-### How to Download and Run
-on your terminal run the following commands
-`git clone https://github.com/andela-omugeri/Inverted-Index.git
+### How to Download and Run.
+
+On your terminal run the following commands:
+
+```
+git clone https://github.com/andela-omugeri/Inverted-Index.git
 
 cd Inverted-Index
 
-http-server`
+http-server
+```
 
 From a browser navigate to `127.0.0.1:8000/SpecRunner.html`. The test should run.
 
