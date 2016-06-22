@@ -44,6 +44,12 @@ describe('Populate Index', function(){
 });
 
 describe('Search Index', function(){
+	beforeEach(function(done){
+		index.createIndex('../jasmine/books.json').then(function(result){
+			data = result;
+			done();
+		});
+	});
 	it('verifies that the correct results of a word are given', function(){
 			expect(index.searchIndex('and')).toEqual([[0, 1]]);
 	});

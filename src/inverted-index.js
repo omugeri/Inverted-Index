@@ -3,6 +3,7 @@ class Index {
   constructor() {
       this.invertedIndex = {};
     }
+
     //pick data from url
   readJson(url) {
     return fetch(url).
@@ -37,11 +38,13 @@ class Index {
           var words = sentence.split(' ');
           for (var i = 0; i < words.length; i++) {
             if (self.invertedIndex[words[i]]) {
-              if (self.invertedIndex[words[i]].indexOf(index) == -1) {
+              if (self.invertedIndex[words[i]].indexOf(index) === -1) {
                 self.invertedIndex[words[i]].push(index);
               }
-            } else {
-              self.invertedIndex[words[i]] = [index]; //add a new entry in the index
+            }
+            else {
+              //add a new entry in the index
+              self.invertedIndex[words[i]] = [index];
             }
           }
         });
@@ -50,21 +53,24 @@ class Index {
     });
   }
 
-  searchIndex(query) { //checks for the index of the term given.
+//checks for the index of the term given.
+  searchIndex(query) {
+    var self = this;
     var index = [];
     var answer = [];
     if (!Array.isArray(query)) {
       query = query.replace(/\W/g, ' ').split(' ');
     }
-    for (var i = 0; i < query.length; i++) {
-      var word = query[i].toLowerCase(); //change the word to lowercase
-      if (this.invertedIndex[word] === undefined) {
+    query.forEach(function(word){
+      word = word.toLowerCase();
+      if (self.invertedIndex[word] === undefined) {
         answer.push('Word not found!');
       } else {
-        answer.push(this.invertedIndex[word]);
+        answer.push(self.invertedIndex[word]);
       }
-      index = answer;
-    }
+        index = answer;
+    });
+
     return index;
   }
 }
