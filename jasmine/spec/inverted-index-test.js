@@ -18,13 +18,11 @@ describe('Read book data', function(){
 	it('should read the JSON file and assert its not empty', function(done){
 		expect(data).toBeTruthy();
 		done();
-		});
 	});
 	it('confirms that each object contains property whose value is a string', function(done){
 		var keys = Object.keys(data[1]);
 		expect(typeof data[1][keys[0]]).toBe('string');
 		done();
-		});
 	});
 });
 
