@@ -36,18 +36,14 @@ describe('Read book data', function(){
 describe('Populate Index', function(){
 
 	it('verifies that the index is created', function(done){
-		// index.createIndex('../jasmine/books.json').then(function(data){
 			expect(data).toEqual(jasmine.any(Object));
 			done();
-		// });
 	});
 
 	it('verifies that the index is correct', function(done){
-		// index.createIndex('../jasmine/books.json').then(function(data){
 			expect(data['alice']).toEqual([0]);
 			expect(data['a']).toEqual([0, 1]);
 			done();
-		// })
 	})
 });
 
