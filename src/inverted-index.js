@@ -22,31 +22,26 @@ class Index {
     var self = this;
 
     return this.readJson(url).then(function(response) {
-      var data = response;
       //get the documents in the json object and store the content in an array
-      data.map(function(element, index) {
+      response.map(function(element, index) {
         var content = [];
         var titles = Object.keys(element);
         var i = 0;
 
-        for (i = 0; i < titles.length; i++) {
-          content.push(element[titles[i]]);
-        }
-        //split the content into words and store each word in the invertedIndex
-        content.map(function(phrase) {
-          sentence = phrase.toLowerCase().replace(/\W+/g, ' ').trim();
-          var words = sentence.split(' ');
-          for (var i = 0; i < words.length; i++) {
-            if (self.invertedIndex[words[i]]) {
-              if (self.invertedIndex[words[i]].indexOf(index) === -1) {
-                self.invertedIndex[words[i]].push(index);
-              }
+        titles.forEach(function(title) {
+          var phrase = element[title];
+          var words = phrase.toLowerCase().replace(/\W+/g, ' ').trim().split(' ');
+          words.forEach(function(word){
+            if (self.invertedIndex[word]) {
+                  if (self.invertedIndex[word].indexOf(index) === -1) {
+                    self.invertedIndex[word].push(index);
+                  }
             }
             else {
-              //add a new entry in the index
-              self.invertedIndex[words[i]] = [index];
+                  //add a new entry in the index
+                  self.invertedIndex[word] = [index];
             }
-          }
+          });
         });
       });
       return self.invertedIndex;
@@ -57,18 +52,18 @@ class Index {
   searchIndex(query) {
     var self = this;
     var index = [];
-    var answer = [];
+
     if (!Array.isArray(query)) {
       query = query.replace(/\W/g, ' ').split(' ');
     }
     query.forEach(function(word){
       word = word.toLowerCase();
-      if (self.invertedIndex[word] === undefined) {
-        answer.push('Word not found!');
+      if (!self.invertedIndex[word]) {
+        index.push(-1);
       } else {
-        answer.push(self.invertedIndex[word]);
+        index.push(self.invertedIndex[word]);
       }
-        index = answer;
+
     });
 
     return index;
