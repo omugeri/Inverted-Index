@@ -1,5 +1,6 @@
 # Inverted Index
 =======
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/929e7f756c084f4eb7f42dc1dfcc0320)](https://www.codacy.com/app/olive-nyotu/Inverted-Index?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=andela-omugeri/Inverted-Index&amp;utm_campaign=Badge_Grade)
 ## Introduction
 
 The Inverted Index keeps track of every word and in which object it appears.
